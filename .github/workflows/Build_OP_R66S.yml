@@ -5,7 +5,7 @@
 # Youtube Channel: https://goo.gl/fvkdwm 
 #=================================================
 
-name: Build_NanoPi_R2S
+name: Build_OP_R66S
 
 on: 
   release:
@@ -18,8 +18,8 @@ on:
   #schedule:
   #  - cron: 0 8 * * 5
   
-  #watch:
-  #  types: [started]
+  watch:
+    types: [started]
 
 jobs:
   build:
@@ -64,7 +64,8 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
-        echo "src-git ssrp https://github.com/fw876/helloworld.git" >> ./feeds.conf.default
+        echo "src-git kenzo https://github.com/kenzok8/small-package.git" >> ./feeds.conf.default
+        echo "src-git small https://github.com/kenzok8/small.git" >> ./feeds.conf.default
         
     - name: Update & Install feeds
       working-directory: ./openwrt
@@ -84,9 +85,9 @@ jobs:
     #  run: |
     #    git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon-jerrykuku
 
-    - name: Configuration Customization - Build_NanoPi_R2S
+    - name: Configuration Customization - Build_OP_R66S
       env:
-        CONFIG_FILE: 'NanoPi_R2S.config'
+        CONFIG_FILE: 'OP_R66S.config'
       run: |
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x ./customize.sh && ./customize.sh
